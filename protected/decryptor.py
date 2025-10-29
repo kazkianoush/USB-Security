@@ -34,11 +34,13 @@ def decrpt_folder(path):
             with open(path+item, 'wb') as f:
                 f.write(decrypted)
 
-            ##nussin
             continue
         elif (os.path.isdir(path+item)):
             decrpt_folder(path+item+'\\')
 
 
 
-decrpt_folder(path+'\\')
+decrpt_folder(path+'\\')This is a new line
+#a
+#a
+#a
