@@ -1,6 +1,7 @@
 from cryptography.fernet import Fernet
 import os
 import sys
+import base64
 
 
 
@@ -16,18 +17,28 @@ path = path[-1]
 
 with open("keyplace.key", 'rb') as f:
     key = f.read()
+    print("Key length:", len(key))
+    print("Key looks like:", key)
 
-fernet = Fernet(key)
+try:
+    fernet = Fernet(key)
+    print("Key is valid")
+except Exception as e:
+    print("Invalid key:", e)
 
 
 def decrpt_folder(path):
     for item in os.listdir(path):
-        if(item == "protected"):
-            continue
+        print(item)
+        # if(item == "protected"):
+        #     continue
         if(os.path.isfile(path+item)):
-
+            print("path is file " + path + item)
             with open(path+item, 'rb') as f:
                 encrypted = f.read()
+                b64 = base64.urlsafe_b64encode(encrypted).decode("ascii")
+                print("opened and read raw: " + str(encrypted)[0:10])
+                print("opened and read: " + str(b64)[0:10])
 
                 decrypted = fernet.decrypt(encrypted)
 
@@ -40,8 +51,4 @@ def decrpt_folder(path):
 
 
 
-decrpt_folder(path+'\\')This is a new line
-#a
-#a
-#a
-#a
+decrpt_folder(str(path))
